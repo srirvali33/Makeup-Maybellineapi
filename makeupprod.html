@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <title>Maybelline Haul</title>
+
+    <style>
+        body{
+            font-family: 'Charmonman', cursive;
+        }
+        #heading {
+
+            text-align: center;
+            padding: 50px;
+            background-color: palevioletred;
+            color: white;
+            font-weight: 200;
+
+        }
+
+        #heading img {
+
+            width: 120px;
+            height: 100px;
+            float: left;
+        }
+
+        #listofitems {
+            display: flex;
+            margin: 10px 10px;
+            flex-wrap: wrap;
+
+        }
+
+        .card {
+
+            background-color: whitesmoke;
+            border: 2px solid white;
+            box-shadow: 1px 1px rgb(223, 217, 217);
+            width: 300px;
+            height: 500px;
+            border-radius: 3%;
+            margin: 5% 5%;
+            text-align: center;
+            display: inline-block;
+
+        }
+
+        .card img {
+
+            border-radius: 50%;
+        }
+
+        .checked {
+            color: orange;
+
+        }
+
+        .filterbtn{
+            float: right;
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="heading">
+        <img src="https://digitanza.com/wp-content/uploads/2021/01/2-7.png">
+        <h2>Maybelline Go!</h2>
+        <i class="fas fa-filter filterbtn"></i>
+
+    </div>
+
+    <div id="listofitems">
+
+
+
+
+
+
+    </div>
+
+    <script>
+        function loadDoc() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                const myObj = JSON.parse(this.responseText);
+                var text1 = "";
+                for (let x in myObj) {
+                    var rating = myObj[x].rating;
+                    let text = "<div class='card'>";
+                    text += "<img src=" + myObj[x].image_link + ">";
+                    text += "<h3>" + myObj[x].name + "</h3>";
+                    text += "<h5>" + myObj[x].price + "</h5>";
+
+                    if (rating == null) {
+                        text += "<span class='fa fa-star checked'></span>";
+                    }
+                    for (var m = 0; m < rating; m++) {
+
+                        text += "<span class='fa fa-star checked'></span>";
+
+                    }
+                    text += "<h6>" + myObj[x].description + "</h6>";
+                    //console.log( myObj[x].name );
+                    text += "</div>";
+                    text1 = text1 + text;
+
+                }
+                document.getElementById("listofitems").innerHTML = text1;
+
+            }
+            xhttp.open("GET", "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline");
+            xhttp.send();
+        }
+
+        loadDoc();
+
+    </script>
+
+
+</body>
+
+</html>
