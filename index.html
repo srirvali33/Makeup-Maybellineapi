@@ -50,6 +50,7 @@
             margin: 5% 5%;
             text-align: center;
             display: inline-block;
+            overflow: hidden;
 
         }
 
@@ -64,8 +65,26 @@
         }
 
         .filterbtn{
+            position: relative;
             float: right;
             cursor: pointer;
+
+        }
+
+        ul li.Dropdown{
+            float: right;
+            list-style-type: none;
+            display: block;
+            position: relative;
+            background-color: lightpink;
+           
+        }
+
+        .filters{
+            display:flex;
+            justify-content: space-between;
+            flex-direction: column;
+            display: none;
 
         }
     </style>
@@ -75,7 +94,13 @@
     <div id="heading">
         <img src="https://digitanza.com/wp-content/uploads/2021/01/2-7.png">
         <h2>Maybelline Go!</h2>
-        <i class="fas fa-filter filterbtn"></i>
+        <i class="fas fa-filter filterbtn" id="filterbtn"></i>
+        <ul class="filters">
+            
+            <li class="Dropdown">Name</li>
+            <li class="Dropdown">Rating</li>
+            <li class="Dropdown">Price</li>
+        </ul>
 
     </div>
 
@@ -118,11 +143,23 @@
                 document.getElementById("listofitems").innerHTML = text1;
 
             }
-            xhttp.open("GET", "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline");
+            xhttp.open("GET", "https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline");
             xhttp.send();
         }
 
         loadDoc();
+
+        var fil=document.getElementById("filterbtn");
+        fil.onclick= function(){
+
+           var k= document.getElementsByClassName('filters');
+
+           for( var k1; k1 < k.length; k++){
+
+            k[k1].style.display = 'block';
+
+           }
+        }
 
     </script>
 
